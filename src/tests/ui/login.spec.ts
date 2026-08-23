@@ -1,5 +1,4 @@
-import { test, expect } from "@playwright/test";
-import { LoginPage } from "@pages/LoginPage";
+import { test, expect } from "@fixtures";
 
 // Chapter 4 — Page Object Model. The test reads as behavior; all the "how"
 // (selectors, fill, click) lives in LoginPage.
@@ -11,11 +10,8 @@ import { LoginPage } from "@pages/LoginPage";
 const SEED_USER = { email: "playwright@test.io", password: "Password123!" };
 
 test.describe("Login (Page Object)", () => {
-  test("a seeded user can log in", async ({ page }) => {
-    const loginPage = new LoginPage(page);
-
-    await loginPage.loginAs(SEED_USER);
-
+  test("a seeded user can log in", async ({ page, loginPage, testUser }) => {
+    await loginPage.loginAs(testUser);
     // Logged-in state: the navbar now offers article authoring and shows the
     // username — neither is present when logged out.
     await expect(page.getByRole("link", { name: "New Article" })).toBeVisible();

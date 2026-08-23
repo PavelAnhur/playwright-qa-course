@@ -5,6 +5,9 @@ import {
   type APIRequestContext,
 } from "@playwright/test";
 import { env } from "@utils/env";
+import { LoginPage } from '../pages/LoginPage';
+import { ArticleEditorPage } from "@pages/ArticleEditorPage";
+import { ArticlePage } from "@pages/ArticlePage";
 
 export interface TestUser {
   username: string;
@@ -22,6 +25,9 @@ export const SEED_USERS = {
 export interface Fixtures {
   api: APIRequestContext;
   testUser: TestUser;
+  loginPage: LoginPage;
+  articleEditorPage: ArticleEditorPage;
+  articlePage: ArticlePage;
 }
 
 export const test = base.extend<Fixtures>({
@@ -33,6 +39,18 @@ export const test = base.extend<Fixtures>({
 
   testUser: async ({}, use) => {
     await use(SEED_USERS.playwright);   // just hand over a known user
+  },
+
+  loginPage: async ({ page }, use) => {
+    await use(new LoginPage(page));          // build it on THIS test's page, hand it over
+  },
+
+  articleEditorPage: async ({ page }, use) => {
+    await use(new ArticleEditorPage(page));
+  },
+
+  articlePage: async ({ page }, use) => {
+    await use(new ArticlePage(page));
   },
 });
 
