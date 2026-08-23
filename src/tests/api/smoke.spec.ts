@@ -57,4 +57,21 @@ test.describe("Inkwell API smoke", () => {
     const body = await res.json();
     expect(body.errors.body[0]).toContain("not found");
   });
+
+  test("GET /user returns the current user", async ({ authedApi, testUser }) => {
+    const res = await authedApi.get("user");      // token attached automatically
+    expect(res.ok()).toBeTruthy();
+
+    const { user } = await res.json();
+    expect(user.username).toBe(testUser.username);
+    expect(user.email).toBe(testUser.email);
+  });
+
+  test("GET /user without a token is rejected", async ({ api }) => {
+    const res = await api.get("user");
+    // the ANONYMOUS client (no token)
+    expect(res.status()).toBe(401);               // 401 = unauthorized
+    const body = await res.json();
+    expect(body.errors.body[0]).toContain("login");
+  });
 });
