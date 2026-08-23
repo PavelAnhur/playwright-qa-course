@@ -28,12 +28,15 @@ export default defineConfig({
       use: { baseURL: env.apiURL },
     },
     {
+      name: "setup",
+      testDir: "./src/setup",
+      testMatch: /auth\.setup\.ts/,
+      use: { baseURL: env.webURL },
+    },
+    {
       name: "ui",
       testDir: "./src/tests/ui",
-      // Run AFTER the api project so the API's database resets never race a UI
-      // read mid-test (e.g. logging a seeded user in). This is a stopgap — real
-      // per-test data isolation arrives later in the course.
-      dependencies: ["api"],
+      dependencies: ["api", "setup"],
       use: { baseURL: env.webURL, ...devices["Desktop Chrome"] },
     },
   ],

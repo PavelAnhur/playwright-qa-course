@@ -7,7 +7,6 @@ import { test, expect } from "@fixtures";
 // playwright.config.ts), so the database is already seeded by the time UI tests
 // run — and the API's resets can never race a UI read. Real per-test data
 // isolation comes later (Part 4).
-const SEED_USER = { email: "playwright@test.io", password: "Password123!" };
 
 test.describe("Login (Page Object)", () => {
   test("a seeded user can log in", async ({ page, loginPage, testUser }) => {
