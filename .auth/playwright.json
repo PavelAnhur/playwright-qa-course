@@ -1,0 +1,14 @@
+{
+  "cookies": [],
+  "origins": [
+    {
+      "origin": "http://localhost:3000",
+      "localStorage": [
+        {
+          "name": "loggedUser",
+          "value": "{\"headers\":{\"Authorization\":\"Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBsYXl3cmlnaHRAdGVzdC5pbyIsImlhdCI6MTc4NzQxMDc1MX0.mWFJi3pKiVEjRpCa8rpRzVcFFkiHLGojGsk0hRT6gGg\"},\"isAuth\":true,\"loggedUser\":{\"email\":\"playwright@test.io\",\"username\":\"playwright\",\"bio\":\"Automation account\",\"image\":null,\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBsYXl3cmlnaHRAdGVzdC5pbyIsImlhdCI6MTc4NzQxMDc1MX0.mWFJi3pKiVEjRpCa8rpRzVcFFkiHLGojGsk0hRT6gGg\"}}"
+        }
+      ]
+    }
+  ]
+}
