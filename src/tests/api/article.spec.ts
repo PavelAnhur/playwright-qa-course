@@ -51,7 +51,7 @@ test("delete removes the article (404 afterward)", async ({ authedApi }) => {
   expect(del.status()).toBe(200);
 
   const after = await authedApi.get(`articles/${article.slug}`);
-  expect(after.status()).toBe(404);                    // it's really gone
+  expect(after.status()).toBe(404);
 });
 
 test("create without a token is rejected", async ({ api }) => {
