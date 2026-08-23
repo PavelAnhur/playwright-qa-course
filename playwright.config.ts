@@ -14,6 +14,7 @@ export default defineConfig({
   // Console "list" output plus an HTML report (with traces/screenshots) on every
   // run — open it with `npm run test:report`. See Chapter 6 on debugging.
   reporter: [["list"], ["html", { open: "never" }]],
+  globalSetup: "./src/setup/global-setup.ts",
 
   use: {
     trace: "on-first-retry",

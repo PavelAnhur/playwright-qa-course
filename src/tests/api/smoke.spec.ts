@@ -1,4 +1,4 @@
-import { test, expect } from '@fixtures'
+import { expect, test } from '@fixtures';
 
 // API smoke — proves the dockerized Inkwell API is up, the test endpoints work,
 // and seeding is deterministic. Paths are built from env.apiURL explicitly so
@@ -8,21 +8,9 @@ import { test, expect } from '@fixtures'
 // Serial mode: every test here shares one database, and /test/reset drops &
 // recreates every table. Running them in parallel would let one test wipe the
 // schema mid-request for another. We reset ONCE up front, then run in order.
-test.describe.configure({ mode: "serial" });
+// test.describe.configure({ mode: "serial" });
 
 test.describe("Inkwell API smoke", () => {
-  test("reset returns known seed data", async ({ api }) => {
-    const res = await api.post(`test/reset`);
-    expect(res.ok()).toBeTruthy();
-
-    const body = await res.json();
-    expect(body.status).toBe("reset");
-    expect(body.article).toBe("welcome-to-inkwell");
-    expect(body.users.map((u: { username: string }) => u.username)).toContain(
-      "playwright",
-    );
-  });
-
   test("tags endpoint responds", async ({ api }) => {
     const res = await api.get(`tags`);
     expect(res.ok()).toBeTruthy();
@@ -38,5 +26,35 @@ test.describe("Inkwell API smoke", () => {
     const { user } = await res.json();
     expect(user.username).toBe("playwright");
     expect(user.token).toBeTruthy();
+  });
+
+  test("GET /articles list the seeded arcticle", async ({ api }) => {
+    const res = await api.get("articles");
+
+    expect(res.status()).toBe(200);
+    expect(res.headers()["content-type"]).toContain("application/json");
+
+    const body = await res.json();
+    expect(typeof body.articlesCount).toBe("number");
+    expect(Array.isArray(body.articles)).toBe(true);
+
+    const slugs = body.articles.map((a: { slug: string }) => a.slug);
+    expect(slugs).toContain("welcome-to-inkwell");
+  });
+
+  test("GET /articles respects the limit query param", async ({ api }) => {
+    const res = await api.get("articles", { params: { limit: 1 } });
+    expect(res.ok()).toBeTruthy();
+
+    const body = await res.json();
+    expect(body.articles.length).toBeLessThanOrEqual(1);
+  });
+
+  test("GET /articles/:slug returns 404 for an unknown slug", async ({ api }) => {
+    const res = await api.get("articles/does-not-exist-xyz");
+
+    expect(res.status()).toBe(404);
+    const body = await res.json();
+    expect(body.errors.body[0]).toContain("not found");
   });
 });

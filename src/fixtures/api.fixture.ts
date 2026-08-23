@@ -6,10 +6,13 @@ export interface ApiFixtures {
   api: APIRequestContext;
 }
 
-export const test = base.extend<ApiFixtures>({
-  api: async ({ }, use) => {
-    const context = await request.newContext({ baseURL: `${env.apiURL}/` });
-    await use(context);
-    await context.dispose();
-  }
+export const test = base.extend<object, ApiFixtures>({
+  api: [
+    async ({ }, use) => {
+      const context = await request.newContext({ baseURL: `${env.apiURL}/` });
+      await use(context);
+      await context.dispose();
+    },
+    { scope: 'worker' },
+  ]
 });
