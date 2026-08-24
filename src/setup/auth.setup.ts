@@ -16,9 +16,17 @@ setup("authenticate", async ({ page, request }) => {
   const { user } = await res.json();
 
   // 2. Write the exact session shape Inkwell reads on load, into localStorage.
-  const session = { headers: { Authorization: `Token ${user.token}` }, isAuth: true, loggedUser: user };
+  const session = {
+    headers: {
+      Authorization: `Token ${user.token}`
+    },
+    isAuth: true,
+    loggedUser: user
+  };
+  await page.addInitScript((session) => {
+    localStorage.setItem("loggedUser", JSON.stringify(session));
+  }, session);
   await page.goto("/");
-  await page.evaluate((v) => localStorage.setItem("loggedUser", JSON.stringify(v)), session);
 
   // 3. Save cookies + localStorage to a file.
   await page.context().storageState({ path: authFile });

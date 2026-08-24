@@ -8,13 +8,13 @@ import { env } from "./src/utils/env";
 export default defineConfig({
   testDir: "./src/tests",
   fullyParallel: true,
-  forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 2 : undefined,
+  forbidOnly: !!process.env['CI'],
+  retries: process.env['CI'] ? 2 : 0,
+  workers: process.env['CI'] ? 2 : 2,
   // Console "list" output plus an HTML report (with traces/screenshots) on every
   // run — open it with `npm run test:report`. See Chapter 6 on debugging.
   reporter: [["list"], ["html", { open: "never" }]],
-  globalSetup: "./src/setup/global-setup.ts",
+  globalSetup: "./src/setup/global.setup.ts",
 
   use: {
     trace: "on-first-retry",
