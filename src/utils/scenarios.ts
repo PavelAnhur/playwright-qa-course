@@ -1,3 +1,4 @@
+import { articleData } from '@data/article';
 import { APIRequestContext } from '@playwright/test';
 
 
@@ -18,24 +19,15 @@ export interface Article {
   [key: string]: unknown;
 }
 
-function uniqueTitle(): string {
-  return `Scenario Article ${Date.now()}-${Math.floor(Math.random() * 1e6)}`;
-}
-
 export async function createArticle(
   api: APIRequestContext,
-  overrides: ArticleInput = {},
+  overrides: Partial<ArticleInput> = {},
 ): Promise<Article> {
   const res = await api.post("articles", {
     data: {
-      article: {
-        title: overrides.title ?? uniqueTitle(),
-        description: overrides.description ?? "Seeded by a scenario helper",
-        body: overrides.body ?? "Body text.",
-        tagList: overrides.tagList ?? [],
-      },
-    },
+      article: articleData(overrides)
+    }
   });
   if (!res.ok()) throw new Error(`createArticle failed: HTTP ${res.status()}`);
-  return (await res.json()).article as Article;
+  return (await res.json())?.article as Article;
 }

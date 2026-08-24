@@ -1,11 +1,16 @@
-/**
- * Single source of truth for environment-specific values. Everything reads URLs
- * from here (never hard-coded in tests), so pointing the suite at another
- * environment is a one-line change / env-var override.
- */
+export type EnvName = "local" | "ci" | "staging";
+
+const ENVIRONMENTS: Record<EnvName, { webURL: string; apiURL: string }> = {
+  local: { webURL: "http://localhost:3000", apiURL: "http://localhost:3001/api" },
+  ci: { webURL: "http://localhost:3000", apiURL: "http://localhost:3001/api" },
+  staging: { webURL: "https://inkwell-staging.example.com", apiURL: "https://inkwell-staging.example.com/api" },
+};
+
+const name = (process.env['TEST_ENV'] as EnvName) || "local";
+const base = ENVIRONMENTS[name] ?? ENVIRONMENTS.local;
+
 export const env = {
-  /** Inkwell SPA (nginx) — the UI base URL. */
-  webURL: process.env['WEB_URL'] ?? "http://localhost:3000",
-  /** Inkwell API base, including the /api prefix. */
-  apiURL: process.env['API_URL'] ?? "http://localhost:3001/api",
+  name,
+  webURL: process.env['WEB_URL'] ?? base.webURL,
+  apiURL: process.env['API_URL'] ?? base.apiURL,
 } as const;
