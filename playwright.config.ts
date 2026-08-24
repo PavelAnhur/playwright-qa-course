@@ -18,7 +18,11 @@ export default defineConfig({
   timeout: env.name === "local" ? 30_000 : 60_000,
   expect: { timeout: env.name === "local" ? 5_000 : 10_000 },
   metadata: { environment: env.name, webURL: env.webURL, apiURL: env.apiURL },
-  reporter: [["list"], ["html", { open: "never" }]],
+  reporter: [
+    ["list"],
+    ["html", { open: "never" }],
+    ["junit", { outputFile: "test-results/junit.xml" }],
+  ],
   globalSetup: "./src/setup/global.setup.ts",
 
   use: {
