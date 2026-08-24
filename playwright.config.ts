@@ -1,18 +1,23 @@
 import { defineConfig, devices } from "@playwright/test";
 import { env } from "./src/utils/env";
 
-// One project per layer for now: a fast API project and a Chromium UI project.
-// Both target the dockerized Inkwell SUT (run `docker compose up -d --build --wait`
-// in ./sut first). As the course progresses this grows into multi-env projects,
-// storageState auth, and sharding.
+
+const isCI = !!process.env['CI'];        // true when running on CI
+
+// Remote environments are flakier (real network), so allow a retry; local stays
+// at 0 so a flaky test is visible immediately.
+const retries = isCI ? 2 : env.name === "staging" ? 1 : 0;
+
+
 export default defineConfig({
   testDir: "./src/tests",
   fullyParallel: true,
-  forbidOnly: !!process.env['CI'],
-  retries: process.env['CI'] ? 2 : 0,
-  workers: process.env['CI'] ? 2 : 2,
-  // Console "list" output plus an HTML report (with traces/screenshots) on every
-  // run — open it with `npm run test:report`. See Chapter 6 on debugging.
+  forbidOnly: isCI,
+  retries,
+  workers: isCI ? 4 : 2,
+  timeout: env.name === "local" ? 30_000 : 60_000,
+  expect: { timeout: env.name === "local" ? 5_000 : 10_000 },
+  metadata: { environment: env.name, webURL: env.webURL, apiURL: env.apiURL },
   reporter: [["list"], ["html", { open: "never" }]],
   globalSetup: "./src/setup/global.setup.ts",
 
