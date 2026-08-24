@@ -31,3 +31,32 @@ export async function createArticle(
   if (!res.ok()) throw new Error(`createArticle failed: HTTP ${res.status()}`);
   return (await res.json())?.article as Article;
 }
+
+export interface RegisteredUser {
+  username: string;
+  email: string;
+  password: string;
+  token: string;
+}
+
+let userSeq = 0;
+
+export async function registerUser(
+  api: APIRequestContext,
+  overrides: Partial<Pick<RegisteredUser, "username" | "email" | "password">> = {},
+): Promise<RegisteredUser> {
+  userSeq += 1;
+  const stamp = `${Date.now()}${userSeq}${Math.floor(Math.random() * 1000)}`;
+  const username = overrides.username ?? `user${stamp}`;
+  const email = overrides.email ?? `${username}@test.io`;
+  const password = overrides.password ?? "Password123!";
+
+  const res = await api.post("users", {
+    data: { user: { username, email, password } },
+  });
+  if (!res.ok()) {
+    throw new Error(`registerUser failed: HTTP ${res.status()}`);
+  }
+  const { user } = await res.json();
+  return { username, email, password, token: user.token };
+}

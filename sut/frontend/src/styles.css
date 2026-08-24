@@ -27,7 +27,7 @@
  */
 
 :root {
-  --brand: #33aa44;
+  --brand: #2e7d32;
   --brand-hover: #2b8e3a;
   --brand-active: #237630;
   --brand-dark: #237630;
@@ -37,12 +37,12 @@
   --danger-light: #d7a3a3;
 
   --secondary: #ccc;
-  --secondary-hover: #b3b3b3;
+  --secondary-hover: #6e6e6e;
   --secondary-border: #adadad;
 
   --text: #373a3c;
-  --text-muted: #999;
-  --text-light: #bbb;
+  --text-muted: #6e6e6e;
+  --text-light: #6e6e6e;
   --text-lighter: #aaa;
   --text-disabled: #818a91;
 
@@ -835,7 +835,7 @@ fieldset[disabled] a.btn {
 }
 
 .navbar-light .navbar-nav .nav-link {
-  color: rgba(0, 0, 0, 0.3);
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .navbar-light .navbar-nav .nav-link:focus,
