@@ -1,11 +1,14 @@
 node_modules/
 .env
 
+
 # Playwright
 test-results/
 playwright-report/
 blob-report/
 playwright/.cache/
+
+.auth/*
 
 # VitePress
 docs/.vitepress/dist/

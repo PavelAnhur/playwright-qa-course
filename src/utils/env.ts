@@ -5,7 +5,7 @@
  */
 export const env = {
   /** Inkwell SPA (nginx) — the UI base URL. */
-  webURL: process.env.WEB_URL ?? "http://localhost:3000",
+  webURL: process.env['WEB_URL'] ?? "http://localhost:3000",
   /** Inkwell API base, including the /api prefix. */
-  apiURL: process.env.API_URL ?? "http://localhost:3001/api",
+  apiURL: process.env['API_URL'] ?? "http://localhost:3001/api",
 } as const;
