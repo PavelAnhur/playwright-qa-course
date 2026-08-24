@@ -16,3 +16,4 @@ docs/.vitepress/cache/
 
 *.log
 .DS_Store
+.auth/playwright.json
