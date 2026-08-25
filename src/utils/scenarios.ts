@@ -1,5 +1,6 @@
 import { articleData } from '@data/article';
-import { APIRequestContext } from '@playwright/test';
+import { request, type APIRequestContext } from "@playwright/test";
+import { env } from "@utils/env";
 import { uniqueId } from '@utils/unique';
 
 
@@ -31,6 +32,21 @@ export async function createArticle(
   });
   if (!res.ok()) throw new Error(`createArticle failed: HTTP ${res.status()}`);
   return (await res.json())?.article as Article;
+}
+
+export async function createArticleAs(
+  token: string,
+  overrides: Partial<ArticleInput> = {},
+): Promise<Article> {
+  const ctx = await request.newContext({
+    baseURL: `${env.apiURL}/`,
+    extraHTTPHeaders: { Authorization: `Token ${token}` },
+  });
+  try {
+    return await createArticle(ctx, overrides);
+  } finally {
+    await ctx.dispose();
+  }
 }
 
 export interface RegisteredUser {

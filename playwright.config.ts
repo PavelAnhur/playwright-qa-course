@@ -46,7 +46,7 @@ export default defineConfig({
     {
       name: "ui",
       testDir: "./src/tests/ui",
-      dependencies: ["api", "setup"],
+      dependencies: ["setup"],
       use: { baseURL: env.webURL, ...devices["Desktop Chrome"] },
     },
   ],

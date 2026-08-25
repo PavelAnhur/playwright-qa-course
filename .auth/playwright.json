@@ -6,7 +6,7 @@
       "localStorage": [
         {
           "name": "loggedUser",
-          "value": "{\"headers\":{\"Authorization\":\"Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBsYXl3cmlnaHRAdGVzdC5pbyIsImlhdCI6MTc4NzY2MjkwOX0.V4PgNOotoe1ig0Ry2EmRU12CFz2_QuqdWiWYmrVBv6Q\"},\"isAuth\":true,\"loggedUser\":{\"email\":\"playwright@test.io\",\"username\":\"playwright\",\"bio\":\"Automation account\",\"image\":null,\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBsYXl3cmlnaHRAdGVzdC5pbyIsImlhdCI6MTc4NzY2MjkwOX0.V4PgNOotoe1ig0Ry2EmRU12CFz2_QuqdWiWYmrVBv6Q\"}}"
+          "value": "{\"headers\":{\"Authorization\":\"Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBsYXl3cmlnaHRAdGVzdC5pbyIsImlhdCI6MTc4NzY3MDA4N30.R9LsTbIBy43tWDBHyu1OYzT1bmClE8GT-FezlVo_PA8\"},\"isAuth\":true,\"loggedUser\":{\"email\":\"playwright@test.io\",\"username\":\"playwright\",\"bio\":\"Automation account\",\"image\":null,\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBsYXl3cmlnaHRAdGVzdC5pbyIsImlhdCI6MTc4NzY3MDA4N30.R9LsTbIBy43tWDBHyu1OYzT1bmClE8GT-FezlVo_PA8\"}}"
         }
       ]
     }

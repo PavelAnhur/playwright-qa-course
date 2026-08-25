@@ -39,7 +39,7 @@ test.describe("Inkwell API smoke", () => {
     expect(Array.isArray(body.articles)).toBe(true);
 
     const slugs = body.articles.map((a: { slug: string }) => a.slug);
-    expect(slugs).toContain("welcome-to-inkwell");
+    slugs.forEach((s: String) => expect(s).toContain('test-article-id'))
   });
 
   test("GET /articles respects the limit query param", async ({ api }) => {
