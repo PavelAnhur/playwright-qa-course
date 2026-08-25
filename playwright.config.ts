@@ -23,10 +23,20 @@ export default defineConfig({
     ["html", { open: "never" }],
     ["junit", { outputFile: "test-results/junit.xml" }],
     ["./reporters/summary-reporter.ts"],
+    ['phantom-report', {
+      outputFolder: 'phantom-report',
+      history: {
+        enabled: true,
+        retention: 10, // Keep 10 days of history
+        filePath: 'phantom-report/history.json'
+      },
+      open: 'never'
+    }]
   ],
   globalSetup: "./src/setup/global.setup.ts",
 
   use: {
+    video: 'on-first-retry',
     trace: "on-first-retry",
     screenshot: "only-on-failure",
   },
@@ -35,7 +45,11 @@ export default defineConfig({
     {
       name: "api",
       testDir: "./src/tests/api",
-      use: { baseURL: env.apiURL },
+      use: {
+        baseURL: env.apiURL,
+        screenshot: 'off',
+        video: 'off',
+      },
     },
     {
       name: "setup",
@@ -59,16 +73,16 @@ export default defineConfig({
       name: "ui webkit",
       testDir: "./src/tests/ui",
       dependencies: ["setup"],
-      use: { 
-        baseURL: env.webURL, 
-        ...devices["Desktop Safari"] 
+      use: {
+        baseURL: env.webURL,
+        ...devices["Desktop Safari"]
       },
     },
     {
       name: "ui mobile-custom",
       testDir: "./src/tests/ui",
       dependencies: ["setup"],
-      use: { 
+      use: {
         baseURL: env.webURL,
         viewport: { width: 375, height: 812 }, // Custom size
         userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X)...',
@@ -81,18 +95,18 @@ export default defineConfig({
       name: "ui mobile-pixel",
       testDir: "./src/tests/ui",
       dependencies: ["setup"],
-      use: { 
-        baseURL: env.webURL, 
-        ...devices["Pixel 5"] 
+      use: {
+        baseURL: env.webURL,
+        ...devices["Pixel 7a"]
       },
     },
     {
       name: "ui mobile-iphone",
       testDir: "./src/tests/ui",
       dependencies: ["setup"],
-      use: { 
-        baseURL: env.webURL, 
-        ...devices["iPhone 12"] 
+      use: {
+        baseURL: env.webURL,
+        ...devices["iPhone 12"]
       },
     },
   ],

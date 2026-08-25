@@ -1,19 +1,30 @@
+# Dependencies
 node_modules/
-.env
+package-lock.json
 
+# Build outputs
+dist/
+build/
 
-# Playwright
+# Playwright artifacts
 test-results/
 playwright-report/
-blob-report/
-playwright/.cache/
-
-.auth/*
-
-# VitePress
-docs/.vitepress/dist/
-docs/.vitepress/cache/
-
+phantom-report/           
 *.log
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# OS files
 .DS_Store
-.auth/playwright.json
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+.auth/

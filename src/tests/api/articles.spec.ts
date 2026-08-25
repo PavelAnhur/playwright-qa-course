@@ -1,4 +1,7 @@
 import { expect, test } from "@fixtures";
+import { validateSchema } from 'playwright-schema-validator';
+// Import your OpenAPI spec (as JSON)
+import realworldSpec from './test-data/schemas/openapi.json' with { type: 'json' };
 
 
 test.describe("Articles API (read)", () => {
@@ -40,5 +43,23 @@ test.describe("Articles API (read)", () => {
     expect(res.status()).toBe(404);
     const body = await res.json();
     expect(body.errors.body[0]).toContain("not found");
+  });
+
+  test('GET /articles matches the RealWorld spec', async ({ api }) => {
+    const response = await api.get('articles');
+    expect(response.ok()).toBeTruthy();
+
+    const data = await response.json();
+
+    // The plugin automatically asserts validity, so no extra assertion is needed.
+    await validateSchema(
+      data,              // The API response data
+      realworldSpec,     // The OpenAPI spec document
+      {
+        endpoint: '/articles', // The endpoint you're testing
+        method: 'GET',         // The HTTP method
+        status: 200,           // The expected response status
+      }
+    );
   });
 });
