@@ -22,6 +22,7 @@ export default defineConfig({
     ["list"],
     ["html", { open: "never" }],
     ["junit", { outputFile: "test-results/junit.xml" }],
+    ["./reporters/summary-reporter.ts"],
   ],
   globalSetup: "./src/setup/global.setup.ts",
 
