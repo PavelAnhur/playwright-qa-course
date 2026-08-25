@@ -44,10 +44,56 @@ export default defineConfig({
       use: { baseURL: env.webURL },
     },
     {
-      name: "ui",
+      name: "ui chrome",
       testDir: "./src/tests/ui",
       dependencies: ["setup"],
       use: { baseURL: env.webURL, ...devices["Desktop Chrome"] },
+    },
+    {
+      name: "ui firefox",
+      testDir: "./src/tests/ui",
+      dependencies: ["setup"],
+      use: { baseURL: env.webURL, ...devices["Desktop Firefox"] },
+    },
+    {
+      name: "ui webkit",
+      testDir: "./src/tests/ui",
+      dependencies: ["setup"],
+      use: { 
+        baseURL: env.webURL, 
+        ...devices["Desktop Safari"] 
+      },
+    },
+    {
+      name: "ui mobile-custom",
+      testDir: "./src/tests/ui",
+      dependencies: ["setup"],
+      use: { 
+        baseURL: env.webURL,
+        viewport: { width: 375, height: 812 }, // Custom size
+        userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X)...',
+        isMobile: true,
+        hasTouch: true,
+        deviceScaleFactor: 2,
+      },
+    },
+    {
+      name: "ui mobile-pixel",
+      testDir: "./src/tests/ui",
+      dependencies: ["setup"],
+      use: { 
+        baseURL: env.webURL, 
+        ...devices["Pixel 5"] 
+      },
+    },
+    {
+      name: "ui mobile-iphone",
+      testDir: "./src/tests/ui",
+      dependencies: ["setup"],
+      use: { 
+        baseURL: env.webURL, 
+        ...devices["iPhone 12"] 
+      },
     },
   ],
 });
