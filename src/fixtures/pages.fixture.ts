@@ -1,6 +1,7 @@
 import { ArticleEditorPage } from "@pages/ArticleEditorPage";
 import { ArticlePage } from "@pages/ArticlePage";
 import { LoginPage } from '@pages/LoginPage';
+import { SettingsPage } from "@pages/SettingsPage";
 import {
   test as base,
 } from "@playwright/test";
@@ -9,7 +10,8 @@ import {
 export interface PageFixtures {
   loginPage: LoginPage;
   articleEditorPage: ArticleEditorPage;
-  articlePage: ArticlePage
+  articlePage: ArticlePage;
+  settingsPage: SettingsPage;
 }
 
 export const test = base.extend<PageFixtures>({
@@ -23,5 +25,9 @@ export const test = base.extend<PageFixtures>({
 
   articlePage: async ({ page }, use) => {
     await use(new ArticlePage(page));
-  }
+  },
+
+  settingsPage: async ({ page }, use) => {
+    await use(new SettingsPage(page));
+  },
 });

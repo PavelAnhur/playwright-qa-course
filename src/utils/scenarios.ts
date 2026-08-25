@@ -1,5 +1,6 @@
 import { articleData } from '@data/article';
 import { APIRequestContext } from '@playwright/test';
+import { uniqueId } from '@utils/unique';
 
 
 export interface ArticleInput {
@@ -39,15 +40,11 @@ export interface RegisteredUser {
   token: string;
 }
 
-let userSeq = 0;
-
 export async function registerUser(
   api: APIRequestContext,
   overrides: Partial<Pick<RegisteredUser, "username" | "email" | "password">> = {},
 ): Promise<RegisteredUser> {
-  userSeq += 1;
-  const stamp = `${Date.now()}${userSeq}${Math.floor(Math.random() * 1000)}`;
-  const username = overrides.username ?? `user${stamp}`;
+  const username = overrides.username ?? `user${uniqueId()}`;
   const email = overrides.email ?? `${username}@test.io`;
   const password = overrides.password ?? "Password123!";
 
