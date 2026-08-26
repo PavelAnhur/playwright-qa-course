@@ -23,4 +23,7 @@ docker run --rm --network host \
   -it mcr.microsoft.com/playwright:v1.62.1 \
   npx playwright test --update-snapshots
 
+echo "Fixing file permissions..."
+sudo chown -R $(whoami): .
+
 echo "Snapshot update complete. Please review and commit the changes."
